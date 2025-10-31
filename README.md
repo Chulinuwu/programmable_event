@@ -6,6 +6,7 @@ Streamlit demo + FastAPI backend ที่จำลอง programmable payment p
 
 - `backend/` – FastAPI application + file-backed JSON datastore + rules engine
 - `streamlit_app.py` – Streamlit UI สำหรับเดโม flow (create program, trigger transaction, manage checklist)
+- `frontend/` – SvelteKit guided UI (มีคำแนะนำทีละขั้นและ error handling เชิงมนุษย์)
 - `requirements.txt` – dependencies สำหรับ backend + frontend
 
 ## เริ่มต้นใช้งาน
@@ -49,6 +50,16 @@ streamlit run streamlit_app.py
 4. Checklists – กด complete/undo เพื่อ trigger rule evaluation และ release เงิน
 
 > ใน sidebar สามารถเปลี่ยน API base URL และ admin user ID ได้
+
+### รัน SvelteKit Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev -- --open
+```
+
+> หน้านี้มีคู่มือทีละขั้นสำหรับผู้ใช้ใหม่ สามารถเปลี่ยน API URL ได้จากส่วน “STEP 0” บนหน้าจอหลัก
 
 ## Seed Data
 
