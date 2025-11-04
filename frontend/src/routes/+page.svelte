@@ -25,9 +25,8 @@
 		User
 	} from '$lib/types';
 
-	// Explicit Tab union to keep Svelte/TypeScript happy inside {#each} blocks
-	type Tab = 'Onboarding' | 'Programs' | 'Transactions' | 'Checklists' | 'Reference';
-	const TABS: Tab[] = ['Onboarding', 'Programs', 'Transactions', 'Checklists', 'Reference'];
+	const TABS = ['Onboarding', 'Programs', 'Transactions', 'Checklists', 'Reference'] as const;
+	type Tab = (typeof TABS)[number];
 
 	const programTemplates: Array<{
 		id: string;
@@ -453,18 +452,18 @@
     <header class="card hero-card stack">
 		<div class="pill">Programmable Payment Playground</div>
 		<h1>Programmable Payment Control Center</h1>
-		<div class="text-block" style="max-width: 760px;">
+		<p style="margin: 0; font-size: 1rem; color: rgba(16, 36, 63, 0.8); max-width: 760px;">
 			คู่มือนี้ออกแบบให้คนที่ไม่เคยใช้ระบบ programmable payment ก็ทำเดโมได้ภายในไม่กี่นาที
 			แค่ทำตามขั้นตอนทีละข้อ: เชื่อมต่อ API → เลือกเทมเพลต → ยิงธุรกรรม → กดยืนยัน checklist
 			ระบบจะบอกทุกก้าวว่าต้องกดอะไรต่อ
-		</div>
+		</p>
 		<div class="grid two">
-					<div class="card stack" style="background: linear-gradient(135deg, #eff6ff, #ffffff);">
-						<h3>STEP 0 · เชื่อมต่อ backend</h3>
-						<div class="text-block">
-							ตรวจสอบว่า FastAPI backend รันอยู่ที่ <code>http://localhost:8000</code> (หรือ URL อื่น)
-							แล้วกด “เชื่อมต่อและโหลดข้อมูล” เพื่อดึง users/programs/merchants ที่ seed ไว้
-						</div>
+			<div class="card stack" style="background: linear-gradient(135deg, #eff6ff, #ffffff);">
+				<h3>STEP 0 · เชื่อมต่อ backend</h3>
+				<p style="margin: 0; font-size: 0.95rem;">
+					ตรวจสอบว่า FastAPI backend รันอยู่ที่ <code>http://localhost:8000</code> (หรือ URL อื่น)
+					แล้วกด “เชื่อมต่อและโหลดข้อมูล” เพื่อดึง users/programs/merchants ที่ seed ไว้
+				</p>
 				<div class="grid" style="margin-top: 0.75rem;">
 					<label for="apiBase">API base URL</label>
 					<input
@@ -478,19 +477,17 @@
 					</button>
 				</div>
 			</div>
-					<div class="card stack">
-						<h3>STEP 1 · ทำความเข้าใจ flow</h3>
-						<div class="text-block">
-							<ol style="margin: 0; padding-left: 1.1rem;">
+			<div class="card stack">
+				<h3>STEP 1 · ทำความเข้าใจ flow</h3>
+				<ol style="margin: 0; padding-left: 1.1rem; font-size: 0.95rem;">
 					<li>ดูยอดเงินและ merchant ที่เตรียมไว้ (แท็บ Onboarding)</li>
 					<li>สร้างโปรแกรมใหม่หรือใช้เทมเพลต (แท็บ Programs)</li>
 					<li>ยิงธุรกรรมผ่านโปรแกรมนั้น (แท็บ Transactions)</li>
 					<li>ถ้ามี checklist ระบบจะถือเงินไว้ → ไปกด complete ในแท็บ Checklists</li>
-							</ol>
-						</div>
-						<div class="text-block text-muted" style="margin-top: 0.5rem;">
-							ระบบจะเตือนอัตโนมัติถ้ากรอกข้อมูลผิด เช่น เลือก user ที่ไม่มีสิทธิ์ หรือหมวดหมู่ไม่ตรง whitelist
-						</div>
+				</ol>
+				<p style="margin: 0; font-size: 0.9rem; color: rgba(16, 36, 63, 0.7);">
+					ระบบจะเตือนอัตโนมัติถ้ากรอกข้อมูลผิด เช่น เลือก user ที่ไม่มีสิทธิ์ หรือหมวดหมู่ไม่ตรง whitelist
+				</p>
 			</div>
 		</div>
 		{#if loadError}
@@ -523,13 +520,17 @@
 
 	{#if activeTab === 'Onboarding'}
 		<section class="stack">
-					<div class="card stack">
-						<h2>ภาพรวมข้อมูลที่เตรียมไว้ให้</h2>
-						<div class="text-block">เราเตรียมข้อมูลตัวอย่างไว้ให้แล้ว คุณสามารถใช้ได้ทันที หรือแก้ไข/เพิ่มของใหม่ผ่าน API</div>
+			<div class="card stack">
+				<h2>ภาพรวมข้อมูลที่เตรียมไว้ให้</h2>
+				<p style="margin: 0;">
+					เราเตรียมข้อมูลตัวอย่างไว้ให้แล้ว คุณสามารถใช้ได้ทันที หรือแก้ไข/เพิ่มของใหม่ผ่าน API
+				</p>
 				<div class="grid two">
 					<div>
-							<h3>👥 Users & Balances</h3>
-							<div class="text-block">เงินใน balance จะถูกหักเมื่อสร้างธุรกรรม และจะคืนเมื่อ checklist ไม่ผ่านหรือยกเลิก</div>
+						<h3>👥 Users & Balances</h3>
+						<p style="margin-top: 0; font-size: 0.9rem;">
+							เงินใน balance จะถูกหักเมื่อสร้างธุรกรรม และจะคืนเมื่อ checklist ไม่ผ่านหรือยกเลิก
+						</p>
                     <div class="table-scroll scroll-shadow">
                         <table>
                             <thead>
@@ -550,8 +551,10 @@
                     </div>
 					</div>
 					<div>
-							<h3>🏪 Merchants & Categories</h3>
-							<div class="text-block">หมวดหมู่นี้ใช้กำหนด whitelist/blacklist ใน rules (พิมพ์ให้ตรง เช่น <code>food</code>)</div>
+						<h3>🏪 Merchants & Categories</h3>
+						<p style="margin-top: 0; font-size: 0.9rem;">
+							หมวดหมู่นี้ใช้กำหนด whitelist/blacklist ใน rules (พิมพ์ให้ตรง เช่น <code>food</code>)
+						</p>
                     <div class="table-scroll scroll-shadow">
                         <table>
                             <thead>
@@ -573,17 +576,17 @@
 					</div>
 				</div>
 			</div>
-					<div class="card stack">
-						<h2>คู่มือเร็ว 4 ขั้นสำหรับเดโม 10 นาที</h2>
-						<div class="text-block">
-							<ol class="step-list">
+			<div class="card stack">
+				<h2>คู่มือเร็ว 4 ขั้นสำหรับเดโม 10 นาที</h2>
+        <ol class="step-list">
             <li><strong>ตั้งกฎ</strong> – เลือกเทมเพลตแล้วปรับให้ตรง use case (เช่น เพิ่มผู้รับ/ผู้จ่าย)</li>
             <li><strong>สร้างธุรกรรม</strong> – เลือกโปรแกรม + Merchant + ยอดเงิน แล้วยิง transaction</li>
             <li><strong>ตรวจผล</strong> – ระบบจะแจ้งผลทันทีว่าผ่าน/ถูกถือไว้/ถูกปฏิเสธ เพราะอะไร</li>
             <li><strong>ปล่อยเงิน</strong> – ถ้ามี checklist ให้ไปกด complete ทีละข้อ เงินจะถูกปล่อยเมื่อครบ</li>
-							</ol>
-						</div>
-						<div class="text-block text-muted" style="margin-top: 0.5rem;">พร้อมแล้วเลื่อนไปที่แท็บ “Programs” เพื่อเริ่มสร้างกฎได้เลย ✨</div>
+        </ol>
+				<p style="margin: 0; font-size: 0.95rem; color: rgba(16, 36, 63, 0.7);">
+					พร้อมแล้วเลื่อนไปที่แท็บ “Programs” เพื่อเริ่มสร้างกฎได้เลย ✨
+				</p>
 			</div>
 		</section>
 	{/if}
@@ -594,10 +597,12 @@
 				<h2>เทมเพลตยอดนิยม (คลิกเพื่อเติมค่าลงแบบฟอร์มทันที)</h2>
 				<div class="grid two">
 					{#each programTemplates as template}
-							<div class="card stack" style="background: #f8fbff;">
-								<h3>{template.name}</h3>
-								<div class="text-block">{template.summary}</div>
-								<div class="text-block text-muted">{template.details}</div>
+						<div class="card stack" style="background: #f8fbff;">
+							<h3>{template.name}</h3>
+							<p style="margin: 0; font-size: 0.95rem;">{template.summary}</p>
+							<p style="margin: 0; font-size: 0.85rem; color: rgba(16, 36, 63, 0.7);">
+								{template.details}
+							</p>
 							<button class="secondary" on:click={() => applyTemplate(template.id)}>
 								เติมเทมเพลตนี้ลงฟอร์ม
 							</button>
@@ -608,7 +613,9 @@
 
 			<div class="card stack">
 				<h2>สร้างโปรแกรมใหม่ (STEP 2)</h2>
-						<div class="text-block">กรอกทีละข้อจากบนลงล่าง ระบบจะเตือนทันทีถ้าข้อมูลไม่ครบหรือ actor พิมพ์ผิด</div>
+				<p style="margin: 0; font-size: 0.95rem;">
+					กรอกทีละข้อจากบนลงล่าง ระบบจะเตือนทันทีถ้าข้อมูลไม่ครบหรือ actor พิมพ์ผิด
+				</p>
 				<div class="grid two">
 					<div class="stack">
 						<div>
@@ -636,7 +643,9 @@
 							</select>
 						</div>
 						<div class="grid">
-							<div class="text-block" style="font-weight: 600; margin-bottom: 0.35rem;">ผู้ที่ใช้โปรแกรมได้ (ใส่ทั้งผู้จ่ายและผู้รับ)</div>
+							<p style="font-weight: 600; font-size: 0.9rem; margin-bottom: 0.35rem;">
+								ผู้ที่ใช้โปรแกรมได้ (ใส่ทั้งผู้จ่ายและผู้รับ)
+							</p>
 							<div class="stack">
 								{#each users as user}
 									<label style="display: flex; align-items: center; gap: 0.5rem; font-weight: 500;">
@@ -668,8 +677,10 @@
 							</div>
 						</div>
 
-							<div>
-								<div class="text-block" style="font-weight: 600; margin-bottom: 0.35rem;">4) หมวด merchant ที่อนุญาต/ห้าม</div>
+						<div>
+							<p style="font-weight: 600; font-size: 0.9rem; margin-bottom: 0.35rem;">
+								4) หมวด merchant ที่อนุญาต/ห้าม
+							</p>
 							<select
 								multiple
 								size={Math.min(6, categoryOptions.length || 3)}
@@ -690,7 +701,10 @@
 									<option value={cat}>{cat}</option>
 								{/each}
 							</select>
-								<div class="text-block text-muted">Tip: หมวดหมู่ต้องตรงกับ category ของ merchant (ดูในแท็บ Onboarding) เช่น <code>food</code>, <code>retail</code></div>
+							<p style="margin: 0; font-size: 0.8rem; color: rgba(16, 36, 63, 0.65);">
+								Tip: หมวดหมู่ต้องตรงกับ category ของ merchant (ดูในแท็บ Onboarding) เช่น
+								<code>food</code>, <code>retail</code>
+							</p>
 						</div>
 
 						<div>
@@ -712,12 +726,14 @@
 								disabled={!programForm.requireChecklist}
 							></textarea>
 							{#if programForm.requireChecklist}
-									<div>
-										<div class="text-block" style="font-weight: 600;">Preview</div>
-										{#if checklistPreviewError}
+								<div>
+									<p style="margin: 0; font-size: 0.9rem; font-weight: 600;">Preview</p>
+									{#if checklistPreviewError}
 										<div class="error-banner">{checklistPreviewError}</div>
-										{:else if checklistPreview.length === 0}
-											<div class="text-block">พิมพ์ checklist ทีละบรรทัดเพื่อดูตัวอย่าง actor ที่นี่</div>
+									{:else if checklistPreview.length === 0}
+										<p style="margin: 0; font-size: 0.85rem;">
+											พิมพ์ checklist ทีละบรรทัดเพื่อดูตัวอย่าง actor ที่นี่
+										</p>
 									{:else}
                     <div class="table-scroll">
                         <table>
@@ -748,23 +764,26 @@
 					<button on:click={handleCreateProgram} disabled={isSubmittingProgram}>
 						{isSubmittingProgram ? 'กำลังสร้างโปรแกรม...' : '✅ สร้างโปรแกรมนี้'}
 					</button>
-						<div class="text-block text-muted">หลังสร้างเสร็จ ระบบจะโหลดรายการโปรแกรมใหม่อัตโนมัติ และแนะนำให้ไปยังแท็บ Transactions ต่อ</div>
+					<p style="margin: 0; font-size: 0.85rem; color: rgba(16, 36, 63, 0.65);">
+						หลังสร้างเสร็จ ระบบจะโหลดรายการโปรแกรมใหม่อัตโนมัติ และแนะนำให้ไปยังแท็บ Transactions ต่อ
+					</p>
 				</div>
 			</div>
 
 			<div class="card stack">
 				<h2>โปรแกรมที่พร้อมใช้งาน</h2>
-						{#if programs.length === 0}
-							<div class="text-block">ยังไม่มีโปรแกรมในระบบ ลองสร้างจากเทมเพลตด้านบนก่อน</div>
-						{:else}
+				{#if programs.length === 0}
+					<p>ยังไม่มีโปรแกรมในระบบ ลองสร้างจากเทมเพลตด้านบนก่อน</p>
+				{:else}
 					{#each programs as program}
 						<details class="card stack" style="background: #ffffff;">
-							<summary>
-								<div class="summary-title">
-									{program.name} · Owner: {getUserLabel(program.created_by)} · Allowed: {program.allowed_users.map((userId) => `${getUserLabel(userId)} (${userId})`).join(', ')}
-								</div>
+							<summary style="font-weight: 700; cursor: pointer;">
+								{program.name} · Owner: {getUserLabel(program.created_by)} · Allowed:{' '}
+								{program.allowed_users.map((userId) => `${getUserLabel(userId)} (${userId})`).join(', ')}
 							</summary>
-							<div class="text-block">{program.description ?? 'ไม่มีคำอธิบาย'}</div>
+							<p style="margin: 0;">
+								{program.description ?? 'ไม่มีคำอธิบาย'}
+							</p>
                             <div class="table-scroll">
                                 <table>
                                     <tbody>
@@ -835,13 +854,16 @@
 		<section class="stack">
 			<div class="card stack">
 				<h2>ยิงธุรกรรมเดโม (STEP 3)</h2>
-						{#if lastTransactionFeedback}
-							<div class="card stack" style="background: rgba(224, 242, 254, 0.85);">
-								<h3>ผลลัพธ์ล่าสุด</h3>
-								<div class="text-block">สถานะ: {lastTransactionFeedback.status}</div>
-								<div class="text-block">ผู้จ่าย: {getUserLabel(lastTransactionFeedback.from_user)} → ผู้รับ: {getUserLabel(lastTransactionFeedback.to_user)}</div>
-							</div>
-						{/if}
+				{#if lastTransactionFeedback}
+                    <div class="card stack" style="background: rgba(224, 242, 254, 0.85);">
+						<h3>ผลลัพธ์ล่าสุด</h3>
+						<p style="margin: 0;">สถานะ: {lastTransactionFeedback.status}</p>
+						<p style="margin: 0;">
+							ผู้จ่าย: {getUserLabel(lastTransactionFeedback.from_user)} →
+							ผู้รับ: {getUserLabel(lastTransactionFeedback.to_user)}
+						</p>
+					</div>
+				{/if}
 				<form class="stack" on:submit|preventDefault={handleCreateTransaction}>
 					<div class="grid two">
 						<div>
@@ -932,10 +954,10 @@
 									</option>
 								{/each}
 							</select>
-							<div class="text-block text-muted">
+							<p style="margin: 0; font-size: 0.8rem; color: rgba(16, 36, 63, 0.65);">
 								หากหมวดไม่ตรงกับ allowed categories ระบบจะ <strong>REJECT</strong>
 								(เช่น เลือก 7-Eleven เมื่ออนุญาตเฉพาะ food)
-							</div>
+							</p>
 						</div>
 						<div>
 							<label for="txnNote">หมายเหตุ (optional)</label>
@@ -946,7 +968,9 @@
 							/>
 						</div>
 					</div>
-							<div class="text-block text-muted" style="font-size: 0.9rem;">http://(example)</div>
+					<p style="margin: 0; font-size: 0.85rem; color: rgba(16, 36, 63, 0.65);">
+						Note: ผู้จ่าย/ผู้รับต้องอยู่ใน allow list ของโปรแกรม ไม่งั้นระบบจะปฏิเสธอัตโนมัติ
+					</p>
 					<button type="submit" disabled={isSubmittingTransaction}>
 						{isSubmittingTransaction ? 'กำลังสร้างธุรกรรม...' : '🚀 ยิงธุรกรรม'}
 					</button>
@@ -955,13 +979,13 @@
 
 			<div class="card stack">
 				<h2>ธุรกรรมทั้งหมด</h2>
-						{#if transactions.length === 0}
-							<div class="text-block">ยังไม่มีธุรกรรม ลองสร้างจากแบบฟอร์มด้านบนก่อน</div>
-						{:else}
+				{#if transactions.length === 0}
+					<p>ยังไม่มีธุรกรรม ลองสร้างจากแบบฟอร์มด้านบนก่อน</p>
+				{:else}
 					{#each transactions as txn}
 						<details class="card stack" style="background: #ffffff;">
-							<summary>
-								<div class="summary-title">{txn.id.slice(0, 8)} • ฿{txn.amount.toLocaleString('th-TH')} • {txn.status}</div>
+							<summary style="font-weight: 700; cursor: pointer;">
+								{txn.id.slice(0, 8)} • ฿{txn.amount.toLocaleString('th-TH')} • {txn.status}
 							</summary>
                         <div class="table-scroll">
                             <table>
@@ -1021,7 +1045,10 @@
 		<section class="stack">
 			<div class="card stack">
 				<h2>จัดการ Checklist (STEP 4)</h2>
-					<div class="text-block">เลือกธุรกรรมที่สถานะ <strong>HELD</strong> แล้วกด Complete ทีละข้อ ระบบจะปล่อยเงินทันทีเมื่อ checklist ครบทุกข้อ</div>
+				<p style="margin: 0; font-size: 0.95rem;">
+					เลือกธุรกรรมที่สถานะ <strong>HELD</strong> แล้วกด Complete ทีละข้อ
+					ระบบจะปล่อยเงินทันทีเมื่อ checklist ครบทุกข้อ
+				</p>
 				<label for="checklistTxn" style="margin-top: 1rem;">1) เลือกธุรกรรม</label>
 				<select id="checklistTxn" bind:value={checklistSelection.transactionId}>
 					{#each transactions as txn}
@@ -1032,20 +1059,25 @@
 				</select>
 
 				{#if checklistSelection.transactionId}
-								{#if !(checklists[checklistSelection.transactionId] ?? []).length}
-									<div class="text-block">ธุรกรรมนี้ไม่ต้องใช้ checklist หรือกำลังโหลด...</div>
+					{#if !(checklists[checklistSelection.transactionId] ?? []).length}
+						<p>ธุรกรรมนี้ไม่ต้องใช้ checklist หรือกำลังโหลด...</p>
 					{:else}
 						<div class="stack">
 							{#each checklists[checklistSelection.transactionId] as item}
 								<div class="card stack" style="background: #ffffff;">
 									<div style="display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
 										<div>
-											<div class="text-block" style="font-weight: 600;">{item.description}</div>
-											<div class="text-block text-muted" style="font-size: 0.95rem;">Actor ที่ต้องกดยืนยัน: {item.required_by}</div>
+											<p style="margin: 0; font-weight: 600;">{item.description}</p>
+											<p style="margin: 0; font-size: 0.85rem; color: rgba(16, 36, 63, 0.65);">
+												Actor ที่ต้องกดยืนยัน: {item.required_by}
+											</p>
 											{#if item.is_completed}
-												<div class="text-block" style="color: rgba(22, 101, 52, 0.8);">
-												✔️ กดยืนยันแล้วโดย {item.completed_by ?? '-'} เมื่อ {item.completed_at ? new Date(item.completed_at).toLocaleString('th-TH') : '-'}
-												</div>
+												<p style="margin: 0; font-size: 0.85rem; color: rgba(22, 101, 52, 0.8);">
+													✔️ กดยืนยันแล้วโดย {item.completed_by ?? '-'} เมื่อ{' '}
+													{item.completed_at
+														? new Date(item.completed_at).toLocaleString('th-TH')
+														: '-'}
+												</p>
 											{/if}
 										</div>
 										<div class="stack" style="min-width: 200px;">

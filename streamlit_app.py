@@ -101,14 +101,7 @@ def render_api_error(err: Exception) -> None:
     st.error(detail_text or message)
 
 
-with st.sidebar:
-    st.header("Settings")
-    api_base = st.text_input("API base URL", st.session_state.api_base)
-    st.session_state.api_base = api_base or DEFAULT_API_BASE
-    st.session_state.admin_user = st.text_input("Admin user ID", st.session_state.admin_user or "admin")
-    st.caption("⚠️ ต้องรัน FastAPI backend (`uvicorn backend.main:app --reload`) ก่อนเปิดหน้านี้")
-    if st.button("Reload data"):
-        st.experimental_rerun()
+
 
 
 st.title("Programmable Payment PoC")

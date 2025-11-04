@@ -13,31 +13,6 @@
 	font-feature-settings: 'ss01' on, 'cv11' on;
 }
 
-/* Helpful readable text blocks used across the app
-   Use <div class="text-block"> for any paragraph or explanatory text
-   to ensure consistent spacing, responsive font-size and line-height. */
-.text-block {
-	margin: 0;
-	color: rgba(16, 36, 63, 0.87);
-	font-size: clamp(0.92rem, 1.6vw, 1rem);
-	line-height: 1.6;
-	max-width: 78ch;
-}
-
-/* small helper for less important captions */
-.text-muted {
-	color: rgba(16, 36, 63, 0.65);
-	font-size: 0.9rem;
-}
-
-/* summary titles inside details -> keep summary compact but readable */
-.summary-title {
-	display: block;
-	font-weight: 700;
-	font-size: 1rem;
-	color: #0f172a;
-}
-
 body {
 	margin: 0;
 	min-height: 100vh;
@@ -53,14 +28,6 @@ main.page-shell {
 	margin: 0 auto;
 	padding: clamp(2rem, 4vw, 3rem) 0 clamp(4rem, 6vw, 6rem);
 	position: relative;
-}
-
-/* make shell padding a little smaller on very small screens */
-@media (max-width: 420px) {
-	main.page-shell {
-		padding-left: 1rem;
-		padding-right: 1rem;
-	}
 }
 
 @media (max-width: 768px) {
